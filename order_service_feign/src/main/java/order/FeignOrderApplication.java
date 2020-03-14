@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EntityScan("cn.itcast.order.entity")
+//激活Feign
 @EnableFeignClients
 public class FeignOrderApplication {
 

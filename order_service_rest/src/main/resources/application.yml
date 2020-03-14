@@ -20,4 +20,10 @@ eureka:
   instance:
     ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
-
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000 #配置熔断器的默认降级时间,默认是1秒

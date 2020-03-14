@@ -6,7 +6,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient("service-product")
+/**
+ * 声明需要调用的微服务名称
+ *  @FeignClient
+ *      name : 服务提供者的名称
+ *      fallback : 配置熔断触发降级方法实现类
+ */
+@FeignClient(name = "service-product",fallback = ProductFeignClientFallBack.class)
 public interface ProductFeignClient {
 
     /**

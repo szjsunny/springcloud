@@ -20,3 +20,14 @@ eureka:
   instance:
     ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
+feign:
+  hystrix:
+    enabled: true #hystrix默认是关闭
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000 #默认的连接超时时间1秒,若1秒没有返回数据,自动的触发降级逻辑

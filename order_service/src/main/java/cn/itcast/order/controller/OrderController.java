@@ -1,5 +1,6 @@
 package cn.itcast.order.controller;
 
+import cn.itcast.order.command.OrderCommand;
 import cn.itcast.order.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,12 @@ public class OrderController {
 
     @RequestMapping(value = "/buy/{id}",method = RequestMethod.GET)
     public Product findById(@PathVariable Long id) {
-        Product product = restTemplate.getForObject("http://127.0.0.1:9001/product/1", Product.class);
-        return product;
+        /*Product product = restTemplate.getForObject("http://127.0.0.1:9001/product/1", Product.class);
+        return product;*/
+        return new OrderCommand(restTemplate,id).execute();
+    }
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public String findOrder(@PathVariable Long id) {
+        return "根据id查询订单";
     }
 }
