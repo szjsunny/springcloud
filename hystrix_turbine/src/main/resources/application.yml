@@ -1,0 +1,16 @@
+server:
+  port: 8031
+spring:
+  application:
+    name: hystrix-turbine
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
+      instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  instance:
+    prefer-ip-address: true
+# 要监控的微服务列表，多个用,分隔
+turbine:
+  appConfig: service-order
+  clusterNameExpression: "'default'"

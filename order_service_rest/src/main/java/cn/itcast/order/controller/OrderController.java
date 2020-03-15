@@ -21,6 +21,9 @@ public class OrderController {
     @HystrixCommand //就算有默认的@DefaultProperties,也需要这个注解,我认为他的意思就是为这个类所有的@HystrixCommand增添Properties
     @RequestMapping(value = "/buy/{id}",method = RequestMethod.GET)
     public Product findById(@PathVariable Long id) {
+        if (id != 1) {
+            throw new RuntimeException("太忙了");
+        }
         Product product = restTemplate.getForObject("http://service-product/product/1", Product.class);
         return product;
     }
