@@ -12,6 +12,11 @@ spring:
     database: MySQL
     show-sql: true
     open-in-view: true
+  cloud:
+    sentinel:
+      eager: true #取消Sentinel控制台懒加载
+      transport:
+        dashboard: localhost:8080
 #配置Eureka
 eureka:
   client:
@@ -20,3 +25,7 @@ eureka:
   instance:
     ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
+#打开对sentinel的支持
+feign:
+  sentinel:
+    enabled: true

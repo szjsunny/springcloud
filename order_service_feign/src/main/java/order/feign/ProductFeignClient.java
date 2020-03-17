@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient("service-product")
+@FeignClient(value = "service-product",fallback = ProductFeignClientCallBack.class)
 public interface ProductFeignClient {
 
     /**
