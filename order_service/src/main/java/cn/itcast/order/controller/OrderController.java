@@ -19,4 +19,6 @@ public class OrderController {
         Product product = restTemplate.getForObject("http://127.0.0.1:9001/product/1", Product.class);
         return product;
     }
+
+
 }

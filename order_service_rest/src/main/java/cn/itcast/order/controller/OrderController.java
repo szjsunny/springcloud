@@ -19,4 +19,6 @@ public class OrderController {
         Product product = restTemplate.getForObject("http://service-product/product/1", Product.class);
         return product;
     }
+
+
 }
