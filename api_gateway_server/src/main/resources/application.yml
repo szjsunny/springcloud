@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway-server
+#配置springCloudGateway的路由
+  cloud:
+    gateway:
+      routes:
+        #配置路由 : 路由id,路由到微服务的uri,断言(判断条件)
+        - id: product-service   #保持唯一
+#          uri: http://127.0.0.1:9001  #目标微服务请求地址
+          uri: lb://service-product
+          predicates:
+            - Path=/product/**    #路由条件 path  : 路由匹配条件
+#配置Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
+  instance:
+    prefer-ip-address: true #使用ip地址注册
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}

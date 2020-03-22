@@ -12,9 +12,17 @@
     <artifactId>api_gateway_server</artifactId>
 
     <dependencies>
+        <!--
+            springCloudGateway的内部是通过netty + webflux实现
+            webflux实现和springMVC存在冲突
+        -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
     </dependencies>
 

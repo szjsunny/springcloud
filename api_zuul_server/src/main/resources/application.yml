@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-zuul-server
+#配置zuul的转发规则
+zuul:
+  routes:
+#    product-service: #路由id,随便写
+#      path: /product-service/** #映射路径   localhost:8080/product-service/**
+#      #url: http://127.0.0.1:9001  #映射路径对应的实际微服务URL地址
+#      serviceId: service-product  #配置转发的微服务的名称
+    #省略写法①:如果路由id 和 对应的微服务的serviceId一致的话
+    service-product: /product-service/**
+    #②:zuul中默认的路由配置
+    #如果当前整合了eureka配置,微服务名称为service-product,默认的请求映射路径是 /service-product/**
+    #/service-order/
+#配置Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
+  instance:
+    prefer-ip-address: true #使用ip地址注册
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
