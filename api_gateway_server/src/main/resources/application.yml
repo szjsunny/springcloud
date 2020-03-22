@@ -1,23 +1,37 @@
 server:
-  port: 8080
+  port: 8080 #端口
 spring:
   application:
-    name: api-gateway-server
-#配置springCloudGateway的路由
-  cloud:
+    name: api-gateway-server #服务名称
+  redis:
+    host: localhost
+    pool: 6379
+    database: 0
+  cloud: #配置SpringCloudGateway的路由
     gateway:
       routes:
-        #配置路由 : 路由id,路由到微服务的uri,断言(判断条件)
-        - id: product-service   #保持唯一
-#          uri: http://127.0.0.1:9001  #目标微服务请求地址
-          uri: lb://service-product
-          predicates:
-            - Path=/product/**    #路由条件 path  : 路由匹配条件
-#配置Eureka
+      - id: product-service
+        uri: lb://service-product
+        predicates:
+        - Path=/product-service/**
+        filters:
+        - name: RequestRateLimiter
+          args:
+            # 使用SpEL从容器中获取对象
+            #key-resolver: '#{@pathKeyResolver}'
+            key-resolver: '#{@userKeyResolver}'
+            # 令牌桶每秒填充平均速率
+            redis-rate-limiter.replenishRate: 1
+            # 令牌桶的上限
+            redis-rate-limiter.burstCapacity: 3
+        - RewritePath=/product-service/(?<segment>.*), /$\{segment}
+  # RequestRateLimiter  : 使用限流过滤器,是spring cloud gateway提供的
+  #参数 replenishRate : 向令牌桶中填充的速率
+  #     burstCapacity : 令牌桶的容量
+#eureka注册中心
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:9000/eureka/
   instance:
     prefer-ip-address: true #使用ip地址注册
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
