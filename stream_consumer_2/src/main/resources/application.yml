@@ -1,5 +1,5 @@
 server:
-  port: 7002 #服务端口
+  port: 7003 #服务端口
 spring:
   application:
     name: stream_consumer #指定服务名
@@ -10,7 +10,7 @@ spring:
   cloud:
     stream:
       instance-count: 2 #消费者总数
-      instance-index: 0 #当前消费者的索引(从0开始)
+      instance-index: 1 #当前消费者的索引(从0开始)
       bindings:
         input:  #内置的获取消息的通道,从itcast-default中获取消息
           destination: itcast-default

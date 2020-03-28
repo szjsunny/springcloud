@@ -16,6 +16,7 @@
         <module>product_service</module>
         <module>stream_producer</module>
         <module>stream_consumer</module>
+        <module>stream_consumer_2</module>
     </modules>
 
     <parent>

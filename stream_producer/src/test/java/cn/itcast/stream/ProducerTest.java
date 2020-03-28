@@ -14,7 +14,10 @@ public class ProducerTest {
     private MessageSender messageSender;
     @Test
     public void send() {
-        messageSender.send("好好加油,争取今年进一线大厂!!!最好是阿里");
+        //messageSender.send("我看看我这个消息是不是被两个消费者都消费了");
+        for (int i = 0; i < 5; i++) {
+            messageSender.send(i + "");
+        }
     }
 
 }

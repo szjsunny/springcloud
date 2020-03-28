@@ -1,8 +1,9 @@
 package cn.itcast.stream.producer;
 
+import cn.itcast.stream.channel.MyProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
@@ -11,13 +12,15 @@ import org.springframework.stereotype.Component;
  * 负责向中间件发送消息
  */
 @Component
-@EnableBinding(Source.class)
+@EnableBinding(MyProcessor.class)
 public class MessageSender {
+
     @Autowired
-    private MessageChannel output;
+    @Qualifier("myOutput")
+    private MessageChannel myOutput;
 
     //发送消息
     public void send(Object obj) {
-        output.send(MessageBuilder.withPayload(obj).build());
+        myOutput.send(MessageBuilder.withPayload(obj).build());
     }
 }
