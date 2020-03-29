@@ -14,6 +14,7 @@
         <module>order_service_rest</module>
         <module>order_service_feign</module>
         <module>product_service</module>
+        <module>config_server</module>
     </modules>
 
     <parent>

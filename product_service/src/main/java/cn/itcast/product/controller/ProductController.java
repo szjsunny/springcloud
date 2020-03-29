@@ -4,10 +4,12 @@ import cn.itcast.product.entity.Product;
 import cn.itcast.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/product")
+@RefreshScope//开启动态刷新
 public class ProductController {
 
 	@Autowired
@@ -21,11 +23,6 @@ public class ProductController {
 
 	@RequestMapping(value = "/{id}",method = RequestMethod.GET)
 	public Product findById(@PathVariable Long id) {
-//		try {
-//			Thread.sleep(2000l);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
 		Product product = productService.findById(id);
 		product.setProductName("访问的服务地址:"+ip + ":" + port);
 		return product;
@@ -36,4 +33,14 @@ public class ProductController {
 		productService.save(product);
 		return "保存成功";
 	}
+
+	@Value("${name}")
+	private String name;
+
+	@RequestMapping("/test")
+	public String test() {
+		return name;
+	}
+
+
 }
