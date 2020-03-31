@@ -13,21 +13,9 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	@Value("${server.port}")
-	private String port;
-
-	@Value("${spring.cloud.client.ip-address}") //spring cloud 自动的获取当前应用的ip地址
-	private String ip;
-
 	@RequestMapping(value = "/{id}",method = RequestMethod.GET)
 	public Product findById(@PathVariable Long id) {
-//		try {
-//			Thread.sleep(2000l);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
 		Product product = productService.findById(id);
-		product.setProductName("访问的服务地址:"+ip + ":" + port);
 		return product;
 	}
 
@@ -35,5 +23,13 @@ public class ProductController {
 	public String save(@RequestBody Product product) {
 		productService.save(product);
 		return "保存成功";
+	}
+
+	@Value("${name}")
+	private String name;
+
+	@RequestMapping(value = "/test")
+	public String test() {
+		return name;
 	}
 }
